@@ -94,12 +94,12 @@ class BashKernel(Kernel):
             bashrc = os.path.join(os.path.dirname(pexpect.__file__), 'bashrc.sh')
             child = pexpect.spawn("bash", ['--rcfile', bashrc], echo=False,
                                   encoding='utf-8', codec_errors='replace')
-            ps1 = replwrap.PEXPECT_PROMPT[:5] + u'\[\]' + replwrap.PEXPECT_PROMPT[5:]
-            ps2 = replwrap.PEXPECT_CONTINUATION_PROMPT[:5] + u'\[\]' + replwrap.PEXPECT_CONTINUATION_PROMPT[5:]
+            ps1 = replwrap.PEXPECT_PROMPT
+            ps2 = replwrap.PEXPECT_CONTINUATION_PROMPT
             prompt_change = u"PS1='{0}' PS2='{1}' PROMPT_COMMAND=''".format(ps1, ps2)
 
             # Using IREPLWrapper to get incremental output
-            self.bashwrapper = IREPLWrapper(child, u'\$', prompt_change,
+            self.bashwrapper = IREPLWrapper(child, u'\\$', prompt_change,
                                             extra_init_cmd="export PAGER=cat",
                                             line_output_callback=self.process_output)
         finally:
